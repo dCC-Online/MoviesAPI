@@ -17,10 +17,9 @@ namespace MoviesAPI.Controllers
             _context = context;
         }
 
-
         // GET: api/movies
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetCollection()
         {
             var movies = _context.Movies.ToArray();
 
@@ -29,7 +28,7 @@ namespace MoviesAPI.Controllers
 
         // GET api/movies/<id>
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetDetail(int id)
         {
             var movie = _context.Movies.Find(id);
 
@@ -56,7 +55,9 @@ namespace MoviesAPI.Controllers
 
             if (movie == null) return NotFound();
 
-            movie = updatedMovie;
+            movie.Title = updatedMovie.Title;
+            movie.RunningTime = updatedMovie.RunningTime;
+            movie.Genre = updatedMovie.Genre;
             _context.SaveChanges();
 
             return Ok(movie);
